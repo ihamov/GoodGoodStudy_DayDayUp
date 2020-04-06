@@ -1,0 +1,11 @@
+**/.idea/
+*.iml
+**/*.iml
+*.class
+**/bin/
+
+**/gen/
+
+**/out/
+
+**/__pycache__/
