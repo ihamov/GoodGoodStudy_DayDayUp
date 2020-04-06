@@ -6,3 +6,4 @@
 - [Linux基础](docs/Linux/Linux.md)
 - [Python基础](docs/Python/Python.md)
 - [Django基础](docs/Django/Django.md)
+- [Photoshop基础](docs/Photoshop/Photoshop.md)
