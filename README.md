@@ -7,3 +7,4 @@
 - [Python基础](docs/Python/Python.md)
 - [Django基础](docs/Django/Django.md)
 - [Photoshop基础](docs/Photoshop/Photoshop.md)
+- [Nginx基础](docs/Nginx/Nginx.md)
