@@ -66,3 +66,5 @@ HBase中的每个列都由Column Family(列簇)和Column Qualifier(列限定符)
     - 删除 `delete 'stu', 'rowkey_1001', 'info:sex'`
     - 删除一个rowkey的数据 `deleteall 'stu', 'rowkey_1001'`
     - 清表 `truncate 'stu'`
+
+### todo
