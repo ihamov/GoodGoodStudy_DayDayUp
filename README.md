@@ -9,3 +9,4 @@
 - [Photoshop基础](docs/Photoshop/Photoshop.md)
 - [Nginx基础](docs/Nginx/Nginx.md)
 - [MybatisPlus基础](docs/MybatisPlus/MybatisPlus.md)
+- [HBase基础](docs/HBase/HBase.md)
