@@ -72,3 +72,95 @@ HBase中的每个列都由Column Family(列簇)和Column Qualifier(列限定符)
 
 ### 写流程
 ![HBase写流程](../../media/imgs/HBase/HBase写流程.png)
+
+### 读流程
+![HBase读流程](../../media/imgs/HBase/HBase读流程.png)
+
+### HBaseAPI 操作(基于1.3.1)
+1. 判断表是否存在
+    ```java
+    // 获取配置文件信息
+    Configuration configuration = HBaseConfiguration.create();
+    configuration.set("hbase.zookeeper.quorum","hadoop101,hadoop102,hadoop103");
+
+    // 获取管理员对象
+    Connection  connection = ConnectionFactory.createConnection(configuration);
+    Admin amdin = connection.getAdmin();
+    // 判断表是否存在
+    boolean exists = admin.tableExists(TableName.valueOf("tableName"))
+
+    // 关闭连接
+    admin.close()
+
+    ```
+2. 创建表
+    ```java
+    // 创建表描述器
+    HTableDescriptor hTableDescriptor = new HTableDescriptor(TableName.valueOf("tableName"));
+
+    // 创建列族描述器
+    HColumnDescriptor hColumnDescriptor = new HColumnDescriptor("cfName");
+
+    // 添加列族信息
+    hTableDescriptor.addFamily(hColumnDescriptor);
+
+    // 创建表
+    admin.createTable(hTableDescriptor);
+    ```
+3. 删除表
+    ```java
+    // 使表下线
+    admin.disableTable(TableName.valueOf("tableName"));
+    // 删除表
+    admin.deleteTable(TableName.valueOf("tableName"));
+    ```
+4. 创建命名空间
+    ```java
+    // 创建命名空间描述器
+    NamespaceDescriptor namespaceDescriptor = NamespaceDescriptor.create("nsName").build();
+    try {
+        admin.createNamespace(namespaceDescriptor);
+    } catch (NamespaceExistException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    ```
+5. 向表插入数据
+    ```java
+    // 获取表对象
+    Table table = connection.getTable(TableName.valueOf("tableName"));
+
+    // 创建Put对象
+    Put put = new Put(Bytes.toBytes("rowKey"));
+
+    // 给Put对象赋值
+    put.addColumn(Bytes.toBytes("cf"), Bytes.toBytes("cn"), Bytes.toBytes("value"));
+
+    // 插入数据
+    table.put(put);
+
+    // 关闭表连接
+    table.close();
+    ```
+6. 获取数据
+    ```java
+    // 获取表对象
+    Table table = connection.getTable(TableName.valueOf("tableName"));
+
+    // 创建Get对象
+    Get get = new Get(Bytes.toBytes("rowKey"))
+
+    // 获取数据
+    Result result = table.get(get);
+
+    // 解析数据
+    for (Cell cell : result.rawCells()) {
+        String cf = Bytes.toString(CellUtil.cloneFamily(cell));
+        String cn = Bytes.toString(CellUtil.cloneQualifier(cell));
+        String value = Bytes.toString(CellUtil.cloneValue(cell));
+    }
+
+    // 关闭表连接
+    table.close();
+    ```
